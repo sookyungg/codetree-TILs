@@ -13,7 +13,7 @@ for i in range(n):
                 for m in range(3):
                     tmp_ans+=arr[i+n][j+m]
                 
-        answer=max(tmp_ans,answer)    
+            answer=max(tmp_ans,answer)    
         
         
 print(answer)
