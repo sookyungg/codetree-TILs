@@ -1,18 +1,17 @@
+# 완전탐색 구현 방법
+# 1. for문 기반으로 구현
+# 2. 재귀함수 기반의 백트래킹
 n=int(input())
 answer=0
-arr=[[0]*n for _ in range(n)]
+arr=[list(map(int,input().split())) for _ in range(n)]
 
-for i in range(n):
-    arr[i]=list(map(int, input().split()))
-
-for i in range(n-2):
-    for j in range(n-2):
+for x in range(n-2):
+    for y in range(n-2):
         tmp_ans=0
-        for n in range(3):
-            for m in range(3):
-                tmp_ans+=arr[i+n][j+m]
-                
-        answer=max(tmp_ans,answer)    
-        
+        for i in range(3):
+            for j in range(3):
+                if arr[i+x][j+y]==1:
+                    tmp_ans+=arr[i+x][j+y]                
+        answer=max(answer, tmp_ans)    
         
 print(answer)
