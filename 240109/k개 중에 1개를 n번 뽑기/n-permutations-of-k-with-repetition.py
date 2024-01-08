@@ -1,9 +1,19 @@
-def generate_combinations(K, N):
-    for i in range(1, K + 1):
-        for j in range(1, N + 1):
-            print(i, j)
+k, n = map(int, input().split())
+answer=[]
 
-# 입력 받기
-K, N = map(int, input().split())
+def makeNum(cur):
+    if cur==n+1:
+        for e in answer:
+            print(e,end=' ')
+        print()
+        return
+    
+    for i in range(1,k+1):
+        answer.append(i)
+        makeNum(cur+1)
+        answer.pop()
 
-generate_combinations(K, N)
+    return
+
+
+makeNum(1)
