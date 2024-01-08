@@ -20,7 +20,7 @@ def blockchk(n, m, arr):
                 blocksum=arr[x+l[0][0]][y+l[0][1]]+arr[x+l[1][0]][y+l[1][1]]+arr[x+l[2][0]][y+l[2][1]]
                 #print(arr[x+l[0][0]][y+l[0][1]], arr[x+l[1][0]][y+l[1][1]], arr[x+l[2][0]][y+l[2][1]])
                 #print(blocksum)
-            answer=max(answer,blocksum)
+                answer=max(answer,blocksum)
 
     #I자 블록
     #Iblock=[[(0,0),(0,1),(0,2)], [(0,0),(1,0),(2,0)]]
