@@ -7,6 +7,7 @@ for i in range(n):
 
 cnt=0
 for x in range(n):
+    flag=0
     for y in range(n-m+1):
         if arr[x][y:y+m]==[arr[x][y]]*m:
             flag =1
@@ -17,6 +18,7 @@ for x in range(n):
 
 for x in range(n):
     tmp=[]
+    flag=0
     for y in range(n):
         tmp.append(arr[y][x])
 
