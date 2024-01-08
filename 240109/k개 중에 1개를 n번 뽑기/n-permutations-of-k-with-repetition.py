@@ -1,24 +1,9 @@
-# 재귀함수
-# 1. 종료조건
-# 2. 재귀호출
+def generate_combinations(K, N):
+    for i in range(1, K + 1):
+        for j in range(1, N + 1):
+            print(i, j)
 
-k,n=map(int,input().split())
-arr=[]
+# 입력 받기
+K, N = map(int, input().split())
 
-def makeNum(cnt):
-    if cnt==n:
-        for num in arr:
-            print(num, end=' ')
-        print()
-        return
-    
-    for i in range(1,k+1):
-        if cnt>=2 and i==arr[-1] and i==arr[-2]:
-            continue
-        else:
-            arr.append(i)
-            makeNum(cnt+1)
-            arr.pop()
-
-
-makeNum(0)
+generate_combinations(K, N)
