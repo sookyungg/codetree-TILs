@@ -32,9 +32,8 @@ def goldcount(r,c,k):
 maxvalue=0
 for x in range(n):
     for y in range(n):
-        for k in range(K):
+        for k in range(n):
             tax=k*k+(k+1)*(k+1)
-
             if goldcount(x,y,k)*m >=tax and maxvalue < goldcount(x,y,k):
                 maxvalue=goldcount(x,y,k)
 
