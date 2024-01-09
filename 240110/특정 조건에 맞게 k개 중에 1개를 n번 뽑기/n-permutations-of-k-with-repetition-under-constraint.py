@@ -6,7 +6,7 @@ def makearr(cur):
         #print(arr)
         #print([arr[0]]*n)
         
-        if len(arr)>=3 and [arr[0]]*n!=arr:
+        if len(arr)>3 and [arr[0]]*n!=arr:
             print(arr)
             for a in arr:
                 print(a, end=' ')
