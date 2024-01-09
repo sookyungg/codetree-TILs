@@ -17,10 +17,11 @@ def line_chk(arr):
     #print(tmp)
     flag=0
     for i in range(len(tmp)-1):
-        if tmp[i][-1] > tmp[i+1][0]:
+        if tmp[i][-1] >= tmp[i+1][0]:
             flag=1
     if flag==0:
         ans.append(sum(arr))
+    #print(ans)
     
     
 
