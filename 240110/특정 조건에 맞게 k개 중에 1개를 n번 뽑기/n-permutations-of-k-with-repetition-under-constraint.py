@@ -11,8 +11,8 @@ def makearr(cur):
                     return
             else:
                 cnt = 1
-        for el in nums:
-            print(el, end=" ")
+        for a in arr:
+            print(a, end=" ")
         print()
         return 
 
