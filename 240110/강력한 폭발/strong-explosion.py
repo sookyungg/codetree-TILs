@@ -11,15 +11,13 @@ def init_arr(arr):
 
 #폭발 규모 확인
 def bomb_explosion(arr):
-    #print(arr)
     tmp_arr=[[0]*n for _ in range(n)]
-    # tmp_arr=init_arr(tmp_arr)
     cnt=0
+
     for b in range(len(arr)):
         # 탐색 위치
         nx=bomb_idx[b][0]
         ny=bomb_idx[b][1]
-        #print(nx,ny)
         tmp_arr[nx][ny]=1
 
         #1번 폭탄
@@ -54,11 +52,9 @@ def bomb_explosion(arr):
             
 
 #폭탄 종류 결정해서 조합 만들기
-
 def bomb_list(cur):
     if cur==bomb_cnt:
         #피해 규모 확인
-        #print(arr)
         bomb_explosion(arr)
         return 
 
