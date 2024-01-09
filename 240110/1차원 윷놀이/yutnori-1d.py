@@ -4,11 +4,12 @@ arr=[]
 ans=[]
 
 def calc(arr):
-    score=[0]*k
+    score=[1]*k
     cnt=0
     for i in range(len(arr)):
         score[arr[i]]+=jump[i]
-    #print(score)
+    #print('arr',arr)
+    #print('score',score)
     for s in score:
         if s>=m:
             cnt+=1
