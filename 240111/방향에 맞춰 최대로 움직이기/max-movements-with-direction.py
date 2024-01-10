@@ -1,38 +1,32 @@
-def find_next(x, y, direction):
-    global n, grid
-    next_list = []
-    nx, ny = x + dx[direction], y + dy[direction]
+def in_range(x, y):
+    return 0 <= x and x < n and 0 <= y and y < n
 
-    while 0 <= nx < n and 0 <= ny < n:
-        if grid[x][y] < grid[nx][ny]:
-            next_list.append((nx, ny))
-        nx += dx[direction]
-        ny += dy[direction]
+def can_go(x, y, prev_num):
+    return in_range(x, y) and num[x][y] > prev_num
 
-    return next_list
-
-def find_max_times(count, x, y):
-    global max_times
-    next_list = find_next(x, y, directions[x][y])
-
-    if not next_list:
-        max_times = max(max_times, count)
-
-    for next_x, next_y in next_list:
-        find_max_times(count + 1, next_x, next_y)
+def find_max(x, y, cnt):
+    global ans
+    
+    ans = max(ans, cnt)
+    
+    dxs = [-1, -1, 0, 1, 1, 1, 0, -1]
+    dys = [0, 1, 1, 1, 0, -1, -1, -1]
+    
+    d = move_dir[x][y] - 1
+    
+    for i in range(n):
+        nx, ny = x + dxs[d] * i, y + dys[d] * i
+        if can_go(nx, ny, num[x][y]):
+            find_max(nx, ny, cnt + 1)
 
 if __name__ == "__main__":
     n = int(input())
-    grid = [list(map(int, input().split())) for _ in range(n)]
-    directions = [list(map(int, input().split())) for _ in range(n)]
-    start = list(map(int, input().split()))
-    start[0] -= 1
-    start[1] -= 1
+    num = [list(map(int, input().split()))for _ in range(n)]
+    move_dir = [list(map(int, input().split()))for _ in range(n)]
 
-    dx = [0, -1, -1, 0, 1, 1, 1, 0, -1]
-    dy = [0, 0, 1, 1, 1, 0, -1, -1, -1]
-    max_times = 0
+    ans = 0
 
-    find_max_times(0, start[0], start[1])
+    r, c = tuple(map(int, input().split()))
 
-    print(max_times)
+    find_max(r - 1, c - 1, 0)
+    print(ans)
