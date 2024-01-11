@@ -15,7 +15,7 @@ def dfs(x,y):
         nx=x+dx[i]
         ny=y+dy[i]
         if 0<=nx<n and 0<=ny<m: 
-            if visited[x][y]==1 or arr[x][y]==0:
+            if visited[x][y]!=1 or arr[x][y]!=0:
                 dfs(nx,ny)
         
 dfs(0,0)
