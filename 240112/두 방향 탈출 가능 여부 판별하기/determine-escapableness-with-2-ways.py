@@ -14,22 +14,11 @@ def dfs(x, y):
     visited[x][y] = 1
     
     for i in range(2):
-        new_x , new_y = x + dx[i], y + dy[i]
-        if can_go(new_x,new_y):
-            dfs(new_x,new_y)
+        nx , ny = x + dx[i], y + dy[i]
+        if (0 <= nx < n and 0 <= ny < m):
+            if visited[nx][ny]==0 and arr[nx][ny]!=0:
+                dfs(nx,ny)
 
-def in_range(x,y):
-    return 0 <= x and x < n and 0 <= y and y < m
-
-def can_go(x,y):
-    if not in_range(x,y):
-        return False
-    
-    if visited[x][y] or arr[x][y] == 0:
-        return False
-    
-    return True
-        
 dfs(0,0)
 #print(visited)
 print(visited[n-1][m-1])
