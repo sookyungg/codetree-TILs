@@ -15,7 +15,7 @@ def dfs(x,y):
             visited[nx][ny]=1 
             dfs(nx,ny)
 
-max_k=0
+max_k=1
 max_a=0
 
 for k in range(1,100+1):
