@@ -11,9 +11,11 @@ def choose(cur,cnt):
         return
 
     answer.append(cur)
+    # cur에 해당하는 숫자를 사용하였을 때의 경우를 탐색
     choose(cur+1,cnt+1)
     answer.pop()
 
+    # cur에 해당하는 숫자를 사용하지 않았을 때의 경우를 탐색
     choose(cur+1,cnt)
     return
 
