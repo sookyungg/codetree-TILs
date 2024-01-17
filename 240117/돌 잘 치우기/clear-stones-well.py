@@ -59,7 +59,6 @@ def choose(cur, cnt, rocks_cnt):
     selected_rocks.pop()
     choose(cur + 1, cnt, rocks_cnt)
 
-# Initialize rocks list
 for i in range(n):
     for j in range(n):
         if arr[i][j] == 1:
