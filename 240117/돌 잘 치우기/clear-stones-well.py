@@ -30,7 +30,7 @@ def cnt_visit(grid):
     return visit
 
 def clean_rocks(selected_rocks, rocks, rocks_cnt):
-    clean_arr = [row[:] for row in arr]  # Make a copy of the original array
+    clean_arr = [row[:] for row in arr] 
     for idx in selected_rocks:
         clean_arr[rocks[idx - 1][0]][rocks[idx - 1][1]] = 0
 
