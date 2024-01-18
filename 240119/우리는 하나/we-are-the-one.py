@@ -15,20 +15,19 @@ def cango(x,y):
 
 def bfs(x,y):
     visited=[[0]*n for _ in range(n)]
-    q=deque()
-    q.append((x,y))
+    #q=deque()
+    #q.append((x,y))
     visited[x][y]=1
-    while q:
-        cx,cy=q.popleft()
-        for i in range(4):
-            nx=cx+dx[i]
-            ny=cy+dy[i]
-            if cango(nx,ny) and u<=abs(arr[cx][cy]-arr[nx][ny])<=d:
-                q.append((nx,ny))
+    #while q:
+        #cx,cy=q.popleft()
+    for i in range(4):
+        nx=x+dx[i]
+        ny=y+dy[i]
+        if cango(nx,ny) and u<=abs(arr[x][y]-arr[nx][ny])<=d:
+                #q.append((nx,ny))
                 visited[nx][ny]=1
     return visited 
 
-print(bfs(1,0))
 
 # 갈수 있는 도시 찾는 함수
 idx_arr=[]
@@ -47,7 +46,7 @@ def best(cities):
             for j in range(n):
                 if visited[i][j]==1:
                     tmp[i][j]=1
-    print(tmp)
+    #print(tmp)
     for i in range(n):
             for j in range(n):
                 if tmp[i][j]==1:
@@ -61,14 +60,17 @@ def choose(cur,cnt):
     global max_num
     if cur==n*n+1:
         if cnt==k:       
-            print(cities)
+            #print(cities)
             max_num=max(best(cities),max_num)
             #print(max_num)
+        return 
+    if(cnt > k):
         return 
     cities.append(cur)
     choose(cur+1,cnt+1)
     cities.pop()
     choose(cur+1,cnt)
+    
 
-#choose(1,0)
-#print(max_num)
+choose(1,0)
+print(max_num)
