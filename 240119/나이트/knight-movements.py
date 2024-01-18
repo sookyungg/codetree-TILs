@@ -12,7 +12,6 @@ def bfs(x,y):
     q=deque()
     q.append((x,y))
     visited[x][y]=1
-
     if r1==r2 and c2==c1:
         return visited
     while q:
@@ -28,7 +27,7 @@ def bfs(x,y):
                 return visited
 
 visited=bfs(r1,c1)
-# if visited==None:
-#     print(-1)
-# else:
-print(visited[r2][c2]-1)
+if visited==None:
+    print(-1)
+else:
+    print(visited[r2][c2]-1)
