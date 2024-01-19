@@ -34,9 +34,6 @@ for i in range(n):
 
 answer=[[0]*n for _ in range(n)]
 for p in people:
-    #print(p)
-    #print(bfs(p[0],p[1]))
-    
     if bfs(p[0],p[1])==None:
         answer[p[0]][p[1]]=-1
     else:
