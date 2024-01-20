@@ -8,4 +8,5 @@ for _ in range(n):
     else:
         d[word]=1
 
+print(d)
 print(d[max(d)])
