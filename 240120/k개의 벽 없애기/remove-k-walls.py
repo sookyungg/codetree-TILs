@@ -51,14 +51,11 @@ def choose(cur,cnt):
     clean_arr=deepcopy(arr)
     if cur==len(walls)+1:
         if cnt==k:
-            #print(remove_list)
             for i in range(k):
                 clean_arr[walls[remove_list[i]-1][0]][walls[remove_list[i]-1][1]]=0
             visited=bfs(r1,c1,clean_arr)
-            #print(visited)
             if visited!=0:
-                min_num=min(min_num,visited)
-            #print(min_num)  
+                min_num=min(min_num,visited)    
         return     
     remove_list.append(cur) 
     choose(cur+1,cnt+1)
@@ -67,7 +64,7 @@ def choose(cur,cnt):
 
 wall_num(arr)
 choose(1,0)
-#print(min_num)
+
 if min_num==10000:
     print(-1)
 else:
