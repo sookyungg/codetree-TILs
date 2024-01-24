@@ -1,17 +1,16 @@
 n=int(input())
-MOD = 1000000007
+MOD = 10007
 
 dp=[0]*(n+1)
 
 def stair(n):
-    dp[0]=1
-    dp[1]=1
+    dp[0] = 1
+    dp[1] = 0
+    dp[2] = 1
+    dp[3] = 1
 
     for i in range(1,n+1):
-        if i>=2:
-            dp[i] = (dp[i] + dp[i - 2]) % MOD
-        if i>=3:
-            dp[i] = (dp[i] + dp[i - 3]) % MOD
+        dp[i] = (dp[i - 2] + dp[i - 3]) % MOD
 
 stair(n)
-print(dp[n-2])
+print(dp[n])
