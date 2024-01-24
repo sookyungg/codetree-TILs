@@ -14,4 +14,4 @@ def stair(n):
             dp[i] = (dp[i] + dp[i - 3]) % MOD
 
 stair(n)
-print(dp[n])
+print(dp[n-1])
