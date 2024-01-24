@@ -1,7 +1,7 @@
 n=int(input())
 MOD = 10007
 
-dp=[0]*(n+1)
+dp=[0]*(1000+1)
 
 def stair(n):
     dp[0] = 1
