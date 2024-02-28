@@ -33,13 +33,20 @@ public class Main {
 
 			//System.out.println(ans);
 			int sum=0;
+			if(arr[1][ans.get(0)]==0||arr[ans.get(ans.size()-1)][1]==0) sum=1000000;
 
+			sum+=arr[1][ans.get(0)];
+			sum+=arr[ans.get(ans.size()-1)][1];
 			for(int i=0;i<n-2;i++){
-				if(i==0) sum+=arr[1][ans.get(i)];
-				if(i==n-3) sum+=arr[ans.get(i)][1];
-				sum+=arr[ans.get(i)][ans.get(i+1)];
-			}
+				if(arr[ans.get(i)][ans.get(i+1)]==0){
+					sum=1000000;
+				}
+				//System.out.println(ans.get(i)+" "+ans.get(i+1));
 
+				sum+=arr[ans.get(i)][ans.get(i+1)];
+
+			}
+			//System.out.println(sum);
 			min=Math.min(min,sum);
 
 			return;
