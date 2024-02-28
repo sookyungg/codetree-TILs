@@ -31,7 +31,7 @@ public class Main {
 
 		if(cur==n){
 
-			System.out.println(ans);
+			//System.out.println(ans);
 			int sum=0;
 
 			for(int i=0;i<n-2;i++){
