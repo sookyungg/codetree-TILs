@@ -84,15 +84,15 @@ for _ in range(q):
     if k[idx]<=0:
         continue
     if try_movement(idx,d):
-        print(dmg)
+        
         for i in range(1,n+1):
             r[i]=nr[i]
             c[i]=nc[i]
             k[i]-=dmg[i]
 
-print(origin_k)
-print(k)
+# print(origin_k)
+# print(k)
 
 
-#ans=sum([origin_k[i]-k[i] for i in range(1,n+1) if k[i]>0])
-#print(ans)
+ans=sum([origin_k[i]-k[i] for i in range(1,n+1) if k[i]>0])
+print(ans)
