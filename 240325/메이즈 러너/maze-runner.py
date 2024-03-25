@@ -90,13 +90,16 @@ def isGameEnd(participant):
     else:
         return False
 
+def calculate_square(r1,c1,r2,c2):
+    return max(abs(r1-r2),abs(c1-c2))
+
 
 def rotation(maze, participant, exit):
     # 가장 가까운 참가자 찾기
     min_length = 1000
     min_par = -1
     for i in range(len(participant)):
-        length = calculate(participant[i][0], participant[i][1], exit[0], exit[1])
+        length = calculate_square(participant[i][0], participant[i][1], exit[0], exit[1])
         if length < min_length:
             min_length = length
             min_par = i
