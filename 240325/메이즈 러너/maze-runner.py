@@ -133,7 +133,7 @@ def rotation(maze, participant, exit):
 
     # 1. maze에 참가자 위치 채움
     for i in range(len(participant)):
-        maze[participant[i][0]][participant[i][1]] = 999
+        maze[participant[i][0]][participant[i][1]] += 11
     maze[exit[0]][exit[1]] = -1
 
     new_maze = copy.deepcopy(maze)
@@ -145,7 +145,7 @@ def rotation(maze, participant, exit):
         x = min_box_r
         y -= 1
         for j in range(min_box_c, min_box_c + boxsize + 1):
-            if maze[i][j] > 0 and maze[i][j] != 999:
+            if 0< maze[i][j] <= 10:
                 maze[i][j] -= 1
             new_maze[x][y] = maze[i][j]
             x += 1
@@ -155,9 +155,11 @@ def rotation(maze, participant, exit):
 
     for i in range(1, n + 1):
         for j in range(1, n + 1):
-            if maze[i][j] == 999:
+            if maze[i][j] > 10:
+                participant_cnt=maze[i][j]//11
                 maze[i][j] = 0
-                participant.append([i, j])
+                for _ in range(participant_cnt):
+                    participant.append([i, j])
             if maze[i][j] == -1:
                 maze[i][j] = 0
                 exit = (i, j)
