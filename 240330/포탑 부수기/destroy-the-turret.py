@@ -2,7 +2,7 @@ from collections import deque
 
 
 def isRange(r, c):
-    if 1 <= r <= m and 1 <= c <= n:
+    if 1 <= r <= n and 1 <= c <= m:
         return True
     return False
 
@@ -133,12 +133,12 @@ def laser(board, attacker_r, attacker_c, victim_r, victim_c):
             return board, True
 
         for i in range(4):
-            nx = (x + dx[i]+m) % m
+            nx = (x + dx[i]+n) % n
             if nx == 0:
-                nx = m
-            ny = (y + dy[i]+n) % n
+                nx = n
+            ny = (y + dy[i]+m) % m
             if ny == 0:
-                ny = n
+                ny = m
             if isRange(nx, ny):
 
                 if visited[nx][ny] == 1: continue
@@ -178,12 +178,12 @@ def bomb(board, attacker_r, attacker_c, victim_r, victim_c):
     path.append((attacker_r, attacker_c))
     path.append((victim_r, victim_c))
     for i in range(8):
-        nx = (victim_r + dx[i]) % m
-        ny = (victim_c + dy[i]) % n
+        nx = (victim_r + dx[i]) % n
+        ny = (victim_c + dy[i]) % m
         if nx == 0:
-            nx = m
+            nx = n
         if ny == 0:
-            ny = n
+            ny = m
         path.append((nx, ny))
         history.append(((nx,ny)))
         board[nx][ny] -= power // 2
