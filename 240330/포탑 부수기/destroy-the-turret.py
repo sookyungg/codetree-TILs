@@ -11,6 +11,11 @@ n, m, k = map(int, input().split())
 board = [[0] * (m + 1) for _ in range(n + 1)]
 history = []
 
+# for i in range(1,n+1):
+#     for j in range(1,m+1):
+#         history.append((i,j))
+
+
 for i in range(1, n + 1):
     board[i] = [0] + list(map(int, input().split()))
 
@@ -49,7 +54,7 @@ def selectAttacker(board):
                         attacker_c = j
 
     board[attacker_r][attacker_c] += (n + m)
-    history.append((attacker_r,attacker_c))
+    #history.append((attacker_r, attacker_c))
     return board, attacker_r, attacker_c
 
 
@@ -59,7 +64,7 @@ def selectVictim(board, attacker_r, attacker_c):
     victim_c = 0
     for i in range(1, n + 1):
         for j in range(1, m + 1):
-            if board[i][j] != 0 and i != attacker_r and j != attacker_c:
+            if board[i][j] != 0 and (i,j)!=(attacker_r,attacker_c):
                 # 공격력이 가장 높은 포탑 선정
                 if max_blood < board[i][j]:
                     victim_r = i
@@ -68,7 +73,8 @@ def selectVictim(board, attacker_r, attacker_c):
 
                 elif max_blood == board[i][j]:
                     # 공격한지 가장 오래된 포탑이 가장 강한 포탑
-                    if (i, j) or (victim_r, victim_c) in history:
+                    if (i, j) in history or (victim_r, victim_c) in history:
+
                         for k in range(len(history)):
                             if (i, j) == history[k]:
                                 victim_r = i
@@ -84,7 +90,7 @@ def selectVictim(board, attacker_r, attacker_c):
                     elif j < victim_c:
                         victim_r = i
                         attacker_c = j
-
+    history.append((victim_r,victim_c))
     return victim_r, victim_c
 
 
@@ -115,46 +121,49 @@ def laser(board, attacker_r, attacker_c, victim_r, victim_c):
             path.append(start)
             for rx, ry in path:
                 if (rx, ry) == (attacker_r, attacker_c): continue
-                if (rx, ry) == (victim_r, victim_c):
-                    board[rx][ry] -= power
                 else:
-                    board[rx][ry] -= power // 2
+                    if (rx, ry) == (victim_r, victim_c):
+                        board[rx][ry] -= power
+                    else:
+                        history.append((rx,ry))
+                        board[rx][ry] -= power // 2
 
             board = repair(path, board)
 
             return board, True
 
         for i in range(4):
-            nx = (x + dx[i]) % m
+            nx = (x + dx[i]+m) % m
             if nx == 0:
                 nx = m
-            ny = (y + dy[i]) % n
+            ny = (y + dy[i]+n) % n
             if ny == 0:
                 ny = n
+            if isRange(nx, ny):
 
-            if visited[nx][ny] == 1: continue
-            if board[nx][ny] == 0: continue
-            visited[nx][ny] = 1
+                if visited[nx][ny] == 1: continue
+                if board[nx][ny] == 0: continue
+                visited[nx][ny] = 1
 
-            prev[(nx, ny)] = (x, y)
-            route.append([nx, ny])
-            q.append((nx, ny, route))
+                prev[(nx, ny)] = (x, y)
+                route.append([nx, ny])
+                q.append((nx, ny, route))
 
     if visited[victim_r][victim_c] == 0:
         return board, False
 
 
 def repair(arr, board):
-    for i in range(1,m + 1):
-        for j in range(1,n + 1):
-            if (i, j) not in arr and board[i][j]!=0:
+    for i in range(1, n + 1):
+        for j in range(1, m + 1):
+            if (i, j) not in arr and board[i][j] != 0:
                 board[i][j] += 1
     return board
 
 
 def checkBroken(board):
-    for i in range(m + 1):
-        for j in range(n + 1):
+    for i in range(n + 1):
+        for j in range(m + 1):
             if board[i][j] < 0:
                 board[i][j] = 0
     return board
@@ -162,27 +171,25 @@ def checkBroken(board):
 
 def bomb(board, attacker_r, attacker_c, victim_r, victim_c):
     power = board[attacker_r][attacker_c]
-    dx=[-1,1,0,0,-1,1,1,-1]
-    dy=[0,0,-1,1,-1,1,-1,1]
-    board[victim_r][victim_c]-=power
-    path=[]
-    path.append((attacker_r,attacker_c))
-    path.append((victim_r,victim_c))
+    dx = [-1, 1, 0, 0, -1, 1, 1, -1]
+    dy = [0, 0, -1, 1, -1, 1, -1, 1]
+    board[victim_r][victim_c] -= power
+    path = []
+    path.append((attacker_r, attacker_c))
+    path.append((victim_r, victim_c))
     for i in range(8):
-        nx=(victim_r+dx[i])%m
-        ny=(victim_c+dy[i])%n
-        if nx==0:
-            nx=m
-        if ny==0:
-            ny=n
-        path.append((nx,ny))
-        board[nx][ny]-=power//2
-    board=checkBroken(board)
-    board=repair(path,board)
+        nx = (victim_r + dx[i]) % m
+        ny = (victim_c + dy[i]) % n
+        if nx == 0:
+            nx = m
+        if ny == 0:
+            ny = n
+        path.append((nx, ny))
+        history.append(((nx,ny)))
+        board[nx][ny] -= power // 2
+    board = checkBroken(board)
+    board = repair(path, board)
     return board
-
-
-
 
 
 def attack(board, attacker_r, attacker_c, victim_r, victim_c):
@@ -192,17 +199,17 @@ def attack(board, attacker_r, attacker_c, victim_r, victim_c):
         board = checkBroken(board)
         return board
 
-    board=bomb(board, attacker_r, attacker_c, victim_r, victim_c)
+    board = bomb(board, attacker_r, attacker_c, victim_r, victim_c)
     return board
+
 
 for _ in range(k):
     board, attacker_r, attacker_c = selectAttacker(board)
-    history.append((attacker_r, attacker_c))
 
     victim_r, victim_c = selectVictim(board, attacker_r, attacker_c)
     board = attack(board, attacker_r, attacker_c, victim_r, victim_c)
-ans=0
-for i in range(1,m+1):
-    if ans<max(board[i]):
-        ans=max(board[i])
+ans = 0
+for i in range(1, n + 1):
+    if ans < max(board[i]):
+        ans = max(board[i])
 print(ans)
