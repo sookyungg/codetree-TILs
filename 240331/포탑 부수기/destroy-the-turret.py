@@ -91,8 +91,8 @@ def selectVictim(board, attacker_r, attacker_c, t):
 
 
 def laser(board, attacker_r, attacker_c, victim_r, victim_c, t):
-    dx = [0, 0, 1, -1]
-    dy = [1, -1, 0, 0]
+    dx = [0, 1, -1, 0]
+    dy = [1, 0, 0, -1]
     visited = [[0] * (m + 1) for _ in range(n + 1)]
 
     q = deque()
@@ -201,10 +201,6 @@ def attack(board, attacker_r, attacker_c, victim_r, victim_c, t):
 
 
 for t in range(1, k + 1):
-    board, attacker_r, attacker_c = selectAttacker(board)
-    history[(attacker_r,attacker_c)]=t
-    victim_r, victim_c = selectVictim(board, attacker_r, attacker_c, t)
-    board = attack(board, attacker_r, attacker_c, victim_r, victim_c, t)
     cnt=0
     for i in range(1,n+1):
         for j in range(1,m+1):
@@ -213,6 +209,10 @@ for t in range(1, k + 1):
     if cnt<2:
         break
 
+    board, attacker_r, attacker_c = selectAttacker(board)
+    history[(attacker_r,attacker_c)]=t
+    victim_r, victim_c = selectVictim(board, attacker_r, attacker_c, t)
+    board = attack(board, attacker_r, attacker_c, victim_r, victim_c, t)
 
 
 ans = 0
