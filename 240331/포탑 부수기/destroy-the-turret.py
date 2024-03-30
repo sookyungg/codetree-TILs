@@ -10,7 +10,6 @@ def isRange(r, c):
 n, m, k = map(int, input().split())
 board = [[0] * (m + 1) for _ in range(n + 1)]
 history = {}
-
 for i in range(1,n+1):
     for j in range(1,m+1):
         history[(i,j)]=0
@@ -39,13 +38,12 @@ def selectAttacker(board):
                     if history[(i,j)]>history[(attacker_r,attacker_c)]:
                         attacker_r = i
                         attacker_c = j
-                    elif history[(i,j)]==history[(attacker_r,attacker_c)]:
-
+                    if history[(i,j)]==history[(attacker_r,attacker_c)]:
                         # 그래도 같으면 행과 열의 합이 가장 큰 포탑
                         if i + j > attacker_r + attacker_c:
                             attacker_r = i
                             attacker_c = j
-                        elif i + j == attacker_r + attacker_c:
+                        if i + j == attacker_r + attacker_c:
                             # 그래도 같으면 열 값이 가장 큰 포탑
                             if j > attacker_c:
                                 attacker_r = i
@@ -56,7 +54,7 @@ def selectAttacker(board):
     return board, attacker_r, attacker_c
 
 
-def selectVictim(board, attacker_r, attacker_c,turn):
+def selectVictim(board, attacker_r, attacker_c,t):
     max_blood = 0
     victim_r = 0
     victim_c = 0
@@ -74,24 +72,24 @@ def selectVictim(board, attacker_r, attacker_c,turn):
                     if history[(i,j)]<history[(victim_r,victim_c)]:
                         victim_r = i
                         victim_c = j
-                    elif history[(i,j)]==history[(victim_r,victim_c)]:
-
-                        # 그래도 같으면 행과 열의 합이 가장 작은 포탑
-                        if i + j < victim_r + victim_c:
-                            victim_r = i
-                            victim_c = j
-                        elif i + j == victim_r + victim_c:
-                            # 그래도 같으면 열 값이 가장 작은 포탑
-                            if j < victim_c:
+                        if history[(i,j)]==history[(victim_r,victim_c)]:
+                            # 그래도 같으면 행과 열의 합이 가장 작은 포탑
+                            if i + j < victim_r + victim_c:
                                 victim_r = i
                                 victim_c = j
-    history[(victim_r,victim_c)]=turn
+                            # 그래도 같으면 열 값이 가장 작은 포탑
+                            if i+j==victim_r+victim_c:
+                                if j < victim_c:
+                                    victim_r = i
+                                    victim_c = j
+
+    history[(victim_r,victim_c)]=t
     return victim_r, victim_c
 
 
-def laser(board, attacker_r, attacker_c, victim_r, victim_c,turn):
-    dx = [0, 1, 0, -1]
-    dy = [1, 0, -1, 0]
+def laser(board, attacker_r, attacker_c, victim_r, victim_c,t):
+    dx = [0, 0, 1, -1]
+    dy = [1, -1, 0, 0]
     visited = [[0] * (m + 1) for _ in range(n + 1)]
 
     q = deque()
@@ -114,14 +112,13 @@ def laser(board, attacker_r, attacker_c, victim_r, victim_c,turn):
                 at = prev[at]
 
             path.append(start)
-            #print(path)
-            #path.reverse()
             for rx, ry in path:
-                if (rx, ry) != (attacker_r, attacker_c):
+                if (rx, ry) == (attacker_r, attacker_c): continue
+                else:
                     if (rx, ry) == (victim_r, victim_c):
                         board[rx][ry] -= power
                     else:
-                        history[(rx,ry)]=turn
+                        history[(rx,ry)]=t
                         board[rx][ry] -= power // 2
 
             board = repair(path, board)
@@ -150,7 +147,6 @@ def laser(board, attacker_r, attacker_c, victim_r, victim_c,turn):
 
 
 def repair(arr, board):
-    #print(arr)
     for i in range(1, n + 1):
         for j in range(1, m + 1):
             if (i, j) not in arr and board[i][j] != 0:
@@ -166,7 +162,7 @@ def checkBroken(board):
     return board
 
 
-def bomb(board, attacker_r, attacker_c, victim_r, victim_c,turn):
+def bomb(board, attacker_r, attacker_c, victim_r, victim_c,t):
     power = board[attacker_r][attacker_c]
     dx = [-1, 1, 0, 0, -1, 1, 1, -1]
     dy = [0, 0, -1, 1, -1, 1, -1, 1]
@@ -181,23 +177,22 @@ def bomb(board, attacker_r, attacker_c, victim_r, victim_c,turn):
             nx = n
         if ny == 0:
             ny = m
-        if board[nx][ny]!=0:
-            path.append((nx, ny))
-            history[(nx,ny)]=turn
-            board[nx][ny] -= power // 2
+        path.append((nx, ny))
+        history[(nx,ny)]=t
+        board[nx][ny] -= power // 2
     board = checkBroken(board)
     board = repair(path, board)
     return board
 
 
-def attack(board, attacker_r, attacker_c, victim_r, victim_c,turn):
-    board, isattack = laser(board, attacker_r, attacker_c, victim_r, victim_c,turn)
+def attack(board, attacker_r, attacker_c, victim_r, victim_c,t):
+    board, isattack = laser(board, attacker_r, attacker_c, victim_r, victim_c,t)
 
     if isattack:
         board = checkBroken(board)
         return board
 
-    board = bomb(board, attacker_r, attacker_c, victim_r, victim_c,turn)
+    board = bomb(board, attacker_r, attacker_c, victim_r, victim_c,t)
     return board
 
 
