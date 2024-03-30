@@ -181,9 +181,10 @@ def bomb(board, attacker_r, attacker_c, victim_r, victim_c,turn):
             nx = n
         if ny == 0:
             ny = m
-        path.append((nx, ny))
-        history[(nx,ny)]=turn
-        board[nx][ny] -= power // 2
+        if board[nx][ny]!=0:
+            path.append((nx, ny))
+            history[(nx,ny)]=turn
+            board[nx][ny] -= power // 2
     board = checkBroken(board)
     board = repair(path, board)
     return board
