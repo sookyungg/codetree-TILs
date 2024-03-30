@@ -22,6 +22,10 @@ def selectAttacker(board):
     min_blood = 5001
     attacker_r = 0
     attacker_c = 0
+
+
+
+
     for i in range(1, n + 1):
         for j in range(1, m + 1):
             if board[i][j] != 0:
@@ -201,6 +205,16 @@ for t in range(1, k + 1):
     history[(attacker_r,attacker_c)]=t
     victim_r, victim_c = selectVictim(board, attacker_r, attacker_c, t)
     board = attack(board, attacker_r, attacker_c, victim_r, victim_c, t)
+    cnt=0
+    for i in range(1,n+1):
+        for j in range(1,m+1):
+            if board[i][j]>0:
+                cnt+=1
+    if cnt<2:
+        break
+
+
+
 ans = 0
 for i in range(1, n + 1):
     if ans < max(board[i]):
