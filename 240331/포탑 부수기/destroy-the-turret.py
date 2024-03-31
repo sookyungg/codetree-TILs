@@ -23,9 +23,6 @@ def selectAttacker(board):
     attacker_r = 0
     attacker_c = 0
 
-
-
-
     for i in range(1, n + 1):
         for j in range(1, m + 1):
             if board[i][j] != 0:
@@ -181,9 +178,10 @@ def bomb(board, attacker_r, attacker_c, victim_r, victim_c, t):
             nx = n
         if ny == 0:
             ny = m
-        path.append((nx, ny))
-        #history[(nx, ny)] = t
-        board[nx][ny] -= power // 2
+            
+        if (nx,ny)!=(attacker_r,attacker_c):
+            path.append((nx, ny))
+            board[nx][ny] -= power // 2
     board = checkBroken(board)
     board = repair(path, board)
     return board
