@@ -2,58 +2,35 @@ import java.util.*;
 import java.io.*;
 
 public class Main {
-    static int n,s;
-    static ArrayList<Integer> numbers=new ArrayList<>();
     
-    
-    static int sumarr(ArrayList<Integer> arr){
-        int sum=0;
-        for(int i=0;i<arr.size();i++){
-            sum=sum+arr.get(i);
-        }
-        return sum;
-    }
 
     public static void main(String[] args) throws IOException {
 
-        BufferedReader br=new BufferedReader(new InputStreamReader(System.in));
-        StringTokenizer st=new StringTokenizer(br.readLine());
+        Scanner sc = new Scanner(System.in);
+        int n = sc.nextInt();
+        int s = sc.nextInt();
+        int[] arr = new int[n];
+        int min = Integer.MAX_VALUE;
 
-        n=Integer.parseInt(st.nextToken());
-        s=Integer.parseInt(st.nextToken());
-
-        st=new StringTokenizer(br.readLine());
-
-        for(int i=0;i<n;i++){
-            numbers.add(Integer.parseInt(st.nextToken()));
+        for (int i = 0; i < n; i += 1) {
+            arr[i] = sc.nextInt();
         }
 
-        Collections.sort(numbers);
-        
-        int min=0;
-        int max=numbers.size()-1;
-        int arrSum=sumarr(numbers);
+        for (int i = 0; i < n; i += 1) {
+            for (int j = 0; j < n; j += 1) {
+                if (i == j) continue;
 
-        
-        int diff = Math.abs(arrSum - s);
-        int closestSum = arrSum;
+                int sum = 0;
+                for (int k = 0; k < n; k += 1) {
+                    if (k == i || k == j) continue;
 
-        while(min<max){
-            int currSum = arrSum - numbers.get(min) - numbers.get(max);
-            int currDiff = Math.abs(currSum - s);
+                    sum += arr[k];
+                }
 
-          if (currDiff < diff) {
-                diff = currDiff;
-                closestSum = currSum;
-            }
-
-            if (currSum > s) {
-                min++;
-            } else {
-                max--;
+                min = Math.min(min, Math.abs(sum - s));
             }
         }
-        //System.out.println(closestSum);
-        System.out.println(diff);
+
+        System.out.println(min);
     }
 }
